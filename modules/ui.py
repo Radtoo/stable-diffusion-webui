@@ -42,6 +42,7 @@ from modules.images import save_image
 import modules.textual_inversion.ui
 import modules.hypernetworks.ui
 import modules.images_history as img_his
+import modules.promptbook as pbook
 
 # this is a fix for Windows users. Without it, javascript files will be served with text/html content-type and the browser will not show any UI
 mimetypes.init()
@@ -1180,6 +1181,9 @@ def create_ui(wrap_gradio_gpu_call):
 
     images_history = img_his.create_history_tabs(gr, opts, wrap_gradio_call(modules.extras.run_pnginfo), images_history_switch_dict)
 
+    # promptbook
+    promptbook = pbook.create_promptbook(gr)
+
     with gr.Blocks() as modelmerger_interface:
         with gr.Row().style(equal_height=False):
             with gr.Column(variant='panel'):
@@ -1596,6 +1600,7 @@ Requested path was: {f}
         (extras_interface, "Extras", "extras"),
         (pnginfo_interface, "PNG Info", "pnginfo"),
         (images_history, "History", "images_history"),
+        (promptbook, "Promptbook", "promptbook"),
         (modelmerger_interface, "Checkpoint Merger", "modelmerger"),
         (train_interface, "Train", "ti"),
         (settings_interface, "Settings", "settings"),
